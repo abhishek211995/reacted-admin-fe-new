@@ -4,7 +4,7 @@ import { TotalCustomers } from './TotalCustomers'
 import { Budget } from '../Badges/Badge'
 import { TasksProgress } from './TasksProgress'
 import { TotalProfit } from './TotalProfit'
-import { Sales } from './Sales'
+// import { Sales } from './Sales'
 import { TrafficByDevice } from './TrafficByDevice'
 import { LatestOrders } from './LatestOrders'
 
@@ -65,7 +65,7 @@ const DashboardIndex = () => {
                         xl={9}
                         xs={12}
                     >
-                        <Sales />
+                        {/* <Sales /> */}
                     </Grid>
                     <Grid
                         item
