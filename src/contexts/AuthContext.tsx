@@ -8,6 +8,9 @@ export interface User {
   role_id: any;
   role_id1: any;
   phone: any;
+  first_name?: string;
+  last_name?: string;
+  user_id?: string
 }
 
 export type Creator = {
@@ -24,6 +27,7 @@ export type Creator = {
   categories: string;
   images: string;
   music_creator_id: string;
+
 };
 
 interface AuthContextProps { user: any | null, isLoggedIn: boolean, loading: any, signIn: (user: User) => void, signOut: () => void }
@@ -43,7 +47,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const signIn = (userData) => {
+  const signIn = (userData: Partial<User>) => {
     setLoading(true);
     setUser({
       name: userData?.first_name,

@@ -22,15 +22,33 @@ const Overview = Loader(lazy(() => import('src/content/overview')));
 
 // Dashboards
 
-const DashboardIndex = Loader(lazy(() => import('src/pages/Components/Dashboard/DashboardIndex')))
+const DashboardIndex = Loader(lazy(() => import('src/pages/Dashboard/DashboardIndex')))
 
 // creator
-const CreatorIndex = Loader(lazy(() => import('src/pages/Components/MusicCreator/CreateMusicCreator')))
+const CreatorIndex = Loader(lazy(() => import('src/pages/MusicCreator/CreateMusicCreator')))
 
-const ViewMusicCreator = Loader(lazy(() => import('src/pages/Components/MusicCreator/View/ViewMusicCreator')))
-const CreateCelebrity = Loader(lazy(() => import('src/pages/Components/Celebrity/CreateCelebrityIndex')))
+const ViewMusicCreator = Loader(lazy(() => import('src/pages/MusicCreator/View/ViewMusicCreator')))
 
-const Celebrities = Loader(lazy(() => import('src/pages/Components/Celebrity/ViewCelebrities')))
+// Celebrity
+const CreateCelebrity = Loader(lazy(() => import('src/pages/Celebrity/create/CreateCelebrityIndex')))
+
+const Celebrities = Loader(lazy(() => import('src/pages/Celebrity/view/ViewCelebrities')))
+
+const UpdateCelebrity = Loader(lazy(() => import('src/pages/Celebrity/update/UpdateCelebrity')))
+
+
+// Categories
+
+const Categories = Loader(lazy(() => import('src/pages/Categories/CategoriesIndex')))
+
+// Social Media
+const SocialMediaIndex = Loader(lazy(() => import('src/pages/socialMedia/SocialMediaIndex')))
+
+// Order
+const ViewOrderIndex = Loader(lazy(() => import('src/pages/Orders/ViewOrder')))
+const LatestOrders = Loader(lazy(() => import('src/pages/Orders/OrdersList')))
+const OrdersIndex = Loader(lazy(() => import('src/pages/Orders/OrdersIndex')))
+
 // Applications
 
 const Messenger = Loader(
@@ -74,7 +92,7 @@ const Forms = Loader(lazy(() => import('src/pages/Components/Forms')));
 
 
 // Register
-const Login = Loader(lazy(() => import('src/pages/Components/Register/Login')))
+const Login = Loader(lazy(() => import('src/pages/Register/Login')))
 
 const Status404 = Loader(
   lazy(() => import('src/pages/Status/Status404'))
@@ -111,45 +129,39 @@ const routes: RouteObject[] = [
         element: <CreatorIndex />
       },
       {
-        path: '/create-music-creator?edit=true/:userId',
+        path: '/create-music-creator/edit/:userId',
         element: <CreatorIndex />
       },
-      // {
-      //   path: 'status',
-      //   children: [
-      //     {
-      //       path: '',
-      //       element: <Navigate to="404" replace />
-      //     },
-      //     {
-      //       path: '404',
-      //       element: <Status404 />
-      //     },
-      //     {
-      //       path: '500',
-      //       element: <Status500 />
-      //     },
-      //     {
-      //       path: 'maintenance',
-      //       element: <StatusMaintenance />
-      //     },
-      //     {
-      //       path: 'coming-soon',
-      //       element: <StatusComingSoon />
-      //     }
-      //   ]
-      // },
       {
         path: '/view-music-creators',
         element: <ProtectedRoute>
           <ViewMusicCreator />
         </ProtectedRoute>
       }, {
-        path: '/create-celebrity',
+        path: '/celebrity/create',
         element: <CreateCelebrity />
       }, {
         path: '/celebrities',
         element: <Celebrities />
+      }, {
+        path: '/celebrity/update/:id',
+        element: <UpdateCelebrity />
+      },
+      {
+        path: '/categories',
+        element: <Categories />
+      },
+      {
+        path: '/social-media-platforms',
+        element: <SocialMediaIndex />
+      },
+      {
+        path: '/orders',
+        element: <OrdersIndex />
+      },
+      {
+        path: '/order/:id',
+        element: <ViewOrderIndex />
       },
       {
         path: '*',

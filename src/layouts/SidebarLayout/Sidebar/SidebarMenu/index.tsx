@@ -206,7 +206,11 @@ function SidebarMenu() {
         // }
         >
           <SubMenuWrapper>
-            <List component="div">
+            <List component="div" subheader={
+              <ListSubheader component="div" disableSticky>
+                Music Creator
+              </ListSubheader>
+            }>
               <ListItem component="div">
                 <Button
                   disableRipple
@@ -218,7 +222,7 @@ function SidebarMenu() {
                   Add Music Creator
                 </Button>
               </ListItem>
-              <ListItem component="div">
+              <ListItem component="div" >
                 <Button
                   disableRipple
                   component={RouterLink}
@@ -229,12 +233,19 @@ function SidebarMenu() {
                   View Music Creators
                 </Button>
               </ListItem>
+
+            </List>
+            <List component="div" subheader={
+              <ListSubheader component="div" disableSticky>
+                Celebrity
+              </ListSubheader>
+            }>
               <ListItem component="div">
                 <Button
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/create-celebrity"
+                  to="/celebrity/create"
                   startIcon={<MmsTwoToneIcon />}
                 >
                   Add Celebrity
@@ -251,6 +262,7 @@ function SidebarMenu() {
                   View All Celebrities
                 </Button>
               </ListItem>
+
             </List>
           </SubMenuWrapper>
         </List>
@@ -269,10 +281,38 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/management/transactions"
+                  to="/categories"
                   startIcon={<TableChartTwoToneIcon />}
                 >
-                  Transactions List
+                  Categories
+                </Button>
+              </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/social-media-platforms"
+                  startIcon={<TableChartTwoToneIcon />}
+                >
+                  Social Media Platforms
+                </Button>
+              </ListItem>
+            </List>
+            <List component={'div'} subheader={
+              <ListSubheader component="div" disableSticky>
+                Orders
+              </ListSubheader>
+            }>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/orders"
+                  startIcon={<TableChartTwoToneIcon />}
+                >
+                  All Orders
                 </Button>
               </ListItem>
             </List>

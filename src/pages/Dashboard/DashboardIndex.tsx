@@ -1,7 +1,7 @@
 import { Box, Container, Grid } from '@mui/material'
 import React from 'react'
 import { TotalCustomers } from './TotalCustomers'
-import { Budget } from '../Badges/Badge'
+import { Budget } from '../Components/Badges/Badge'
 import { TasksProgress } from './TasksProgress'
 import { TotalProfit } from './TotalProfit'
 import { Sales } from './Sales'

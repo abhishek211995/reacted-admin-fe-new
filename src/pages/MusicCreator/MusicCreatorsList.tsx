@@ -132,7 +132,7 @@ export const MusicCreatorList = () => {
                                             }}>
                                                 <DeleteIcon />
                                             </IconButton>
-                                            <IconButton onClick={() => router(`/create-music-creator?edit=true/${creator.user_id}`)} aria-label="delete" color="warning" size="small">
+                                            <IconButton onClick={() => router(`/create-music-creator/edit/${creator.user_id}`)} aria-label="delete" color="warning" size="small">
                                                 <EditOutlined />
                                             </IconButton>
                                         </Stack>

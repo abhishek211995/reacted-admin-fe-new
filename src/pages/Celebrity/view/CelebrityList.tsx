@@ -120,7 +120,7 @@ export const CelebrityList = (props) => {
                         }}
                       > */}
                                             <div onClick={() => {
-                                                router(`/update/celebrity/${cat?.user_id}`)
+                                                router(`/celebrity/update/${cat?.user_id}`)
                                             }}>
                                                 <IconButton aria-label="ViewDetails" color="primary" size="small">
                                                     <VisibilityIcon color="primary" />
