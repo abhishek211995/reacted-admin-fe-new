@@ -19,8 +19,8 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { baseUrl } from 'src/constants/constants';
-import { SeverityPill } from '../Dashboard/ServityPill';
 import { HttpRequest } from 'src/services/axios.service';
+import { SeverityPill } from '../Dashboard/ServityPill';
 
 
 

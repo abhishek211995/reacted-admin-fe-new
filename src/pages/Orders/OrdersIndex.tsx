@@ -2,11 +2,7 @@ import { Grid } from '@mui/material'
 import { Box, Container } from '@mui/system'
 import React from 'react'
 import { Budget } from '../Components/Badges/Badge'
-import { Sales } from '../Dashboard/Sales'
-import { TasksProgress } from '../Dashboard/TasksProgress'
-import { TotalCustomers } from '../Dashboard/TotalCustomers'
-import { TotalProfit } from '../Dashboard/TotalProfit'
-import { TrafficByDevice } from '../Dashboard/TrafficByDevice'
+
 import LatestOrders from './OrdersList'
 
 const OrdersIndex = () => {

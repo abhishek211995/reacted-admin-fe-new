@@ -147,9 +147,9 @@ const SubMenuWrapper = styled(Box)(
                 background: ${theme.colors.alpha.trueWhite[100]};
                 opacity: 0;
                 transition: ${theme.transitions.create([
-    'transform',
-    'opacity'
-  ])};
+                  'transform',
+                  'opacity'
+                ])};
                 width: 6px;
                 height: 6px;
                 transform: scale(0);
@@ -199,18 +199,21 @@ function SidebarMenu() {
         </List>
         <List
           component="div"
-        // subheader={
-        //   <ListSubheader component="div" disableSticky>
-        //     Dashboards
-        //   </ListSubheader>
-        // }
+          // subheader={
+          //   <ListSubheader component="div" disableSticky>
+          //     Dashboards
+          //   </ListSubheader>
+          // }
         >
           <SubMenuWrapper>
-            <List component="div" subheader={
-              <ListSubheader component="div" disableSticky>
-                Music Creator
-              </ListSubheader>
-            }>
+            <List
+              component="div"
+              subheader={
+                <ListSubheader component="div" disableSticky>
+                  Music Creator
+                </ListSubheader>
+              }
+            >
               <ListItem component="div">
                 <Button
                   disableRipple
@@ -222,7 +225,7 @@ function SidebarMenu() {
                   Add Music Creator
                 </Button>
               </ListItem>
-              <ListItem component="div" >
+              <ListItem component="div">
                 <Button
                   disableRipple
                   component={RouterLink}
@@ -233,13 +236,15 @@ function SidebarMenu() {
                   View Music Creators
                 </Button>
               </ListItem>
-
             </List>
-            <List component="div" subheader={
-              <ListSubheader component="div" disableSticky>
-                Celebrity
-              </ListSubheader>
-            }>
+            <List
+              component="div"
+              subheader={
+                <ListSubheader component="div" disableSticky>
+                  Celebrity
+                </ListSubheader>
+              }
+            >
               <ListItem component="div">
                 <Button
                   disableRipple
@@ -262,7 +267,6 @@ function SidebarMenu() {
                   View All Celebrities
                 </Button>
               </ListItem>
-
             </List>
           </SubMenuWrapper>
         </List>
@@ -299,11 +303,14 @@ function SidebarMenu() {
                 </Button>
               </ListItem>
             </List>
-            <List component={'div'} subheader={
-              <ListSubheader component="div" disableSticky>
-                Orders
-              </ListSubheader>
-            }>
+            <List
+              component={'div'}
+              subheader={
+                <ListSubheader component="div" disableSticky>
+                  Orders
+                </ListSubheader>
+              }
+            >
               <ListItem component="div">
                 <Button
                   disableRipple
@@ -333,10 +340,10 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/management/profile/details"
+                  to="/account"
                   startIcon={<AccountCircleTwoToneIcon />}
                 >
-                  User Profile
+                  My Account
                 </Button>
               </ListItem>
               <ListItem component="div">
@@ -344,7 +351,7 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/management/profile/settings"
+                  to="/settings"
                   startIcon={<DisplaySettingsTwoToneIcon />}
                 >
                   Account Settings
@@ -357,7 +364,7 @@ function SidebarMenu() {
           component="div"
           subheader={
             <ListSubheader component="div" disableSticky>
-              Components
+              Support
             </ListSubheader>
           }
         >
@@ -368,13 +375,13 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/components/buttons"
+                  to="/customer-support"
                   startIcon={<BallotTwoToneIcon />}
                 >
-                  Buttons
+                  Customer Support
                 </Button>
               </ListItem>
-              <ListItem component="div">
+              {/* <ListItem component="div">
                 <Button
                   disableRipple
                   component={RouterLink}
@@ -461,7 +468,7 @@ function SidebarMenu() {
                 >
                   Forms
                 </Button>
-              </ListItem>
+              </ListItem> */}
             </List>
           </SubMenuWrapper>
         </List>

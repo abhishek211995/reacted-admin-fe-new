@@ -49,6 +49,8 @@ const ViewOrderIndex = Loader(lazy(() => import('src/pages/Orders/ViewOrder')))
 const LatestOrders = Loader(lazy(() => import('src/pages/Orders/OrdersList')))
 const OrdersIndex = Loader(lazy(() => import('src/pages/Orders/OrdersIndex')))
 
+// Customer Support 
+const CustomerSupport = Loader(lazy(() => import('src/pages/CustomerSupport/CustomerSupportIndex')))
 // Applications
 
 const Messenger = Loader(
@@ -107,6 +109,11 @@ const StatusMaintenance = Loader(
   lazy(() => import('src/pages/Status/Maintenance'))
 );
 
+// Account
+const AccountProfile = Loader(lazy(() => import('src/pages/Account/Account')))
+
+// settings
+const Setting = Loader(lazy(() => import('src/pages/Settings/Setting')))
 
 
 const routes: RouteObject[] = [
@@ -120,6 +127,13 @@ const routes: RouteObject[] = [
       <SidebarLayout />
     </ProtectedRoute>,
     children: [
+      {
+        path: '/account',
+        element: <AccountProfile />
+      }, {
+        path: '/settings',
+        element: <Setting />
+      },
       {
         path: '/',
         element: <Transactions />
@@ -162,6 +176,10 @@ const routes: RouteObject[] = [
       {
         path: '/order/:id',
         element: <ViewOrderIndex />
+      },
+      {
+        path: '/customer-support',
+        element: <CustomerSupport />
       },
       {
         path: '*',

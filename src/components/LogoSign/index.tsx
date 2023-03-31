@@ -8,6 +8,7 @@ import {
   useTheme
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+import AppLogo from 'src/icons/Logo';
 
 const LogoWrapper = styled(Link)(
   ({ theme }) => `
@@ -98,10 +99,7 @@ function Logo() {
   const theme = useTheme();
 
   return (
-    <TooltipWrapper
-      title="Tokyo Free White React Typescript Admin Dashboard"
-      arrow
-    >
+    <TooltipWrapper title="Admin Dashboard - Reacted" arrow>
       <LogoWrapper to="/overview">
         <Badge
           sx={{
@@ -111,14 +109,9 @@ function Logo() {
               top: 8
             }
           }}
-          overlap="circular"
-          color="success"
-          badgeContent="2.0"
         >
           <LogoSignWrapper>
-            <LogoSign>
-              <LogoSignInner />
-            </LogoSign>
+            <AppLogo />
           </LogoSignWrapper>
         </Badge>
       </LogoWrapper>

@@ -7,9 +7,9 @@ import axios from 'axios';
 import { baseUrl } from 'src/constants/constants';
 import { useParams } from 'react-router';
 import { HttpRequest } from 'src/services/axios.service';
-import { getAdminOrderDetails } from 'src/constants/Api';
 import { Link } from 'react-router-dom';
 import CustomizedMenus from 'src/components/DropDown/CustomizesMenus';
+import { getAdminOrderDetails } from 'src/constants/Api';
 
 const ViewOrder = () => {
     const [orderDetails, setOrderDetails] = useState<any>([]);
