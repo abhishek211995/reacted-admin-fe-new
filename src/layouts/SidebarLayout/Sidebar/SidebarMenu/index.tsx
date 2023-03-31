@@ -147,9 +147,9 @@ const SubMenuWrapper = styled(Box)(
                 background: ${theme.colors.alpha.trueWhite[100]};
                 opacity: 0;
                 transition: ${theme.transitions.create([
-                  'transform',
-                  'opacity'
-                ])};
+    'transform',
+    'opacity'
+  ])};
                 width: 6px;
                 height: 6px;
                 transform: scale(0);
@@ -188,10 +188,10 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/overview"
+                  to="/"
                   startIcon={<DesignServicesTwoToneIcon />}
                 >
-                  Overview
+                  Dashboard
                 </Button>
               </ListItem>
             </List>
@@ -199,11 +199,11 @@ function SidebarMenu() {
         </List>
         <List
           component="div"
-          subheader={
-            <ListSubheader component="div" disableSticky>
-              Dashboards
-            </ListSubheader>
-          }
+        // subheader={
+        //   <ListSubheader component="div" disableSticky>
+        //     Dashboards
+        //   </ListSubheader>
+        // }
         >
           <SubMenuWrapper>
             <List component="div">
@@ -212,10 +212,10 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/dashboards/crypto"
+                  to="/Add-Music-Creator"
                   startIcon={<BrightnessLowTwoToneIcon />}
                 >
-                  Cryptocurrency
+                  Add Music Creator
                 </Button>
               </ListItem>
               <ListItem component="div">
@@ -223,10 +223,32 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/dashboards/messenger"
+                  to="/view-music-creators"
                   startIcon={<MmsTwoToneIcon />}
                 >
-                  Messenger
+                  View Music Creators
+                </Button>
+              </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/create-celebrity"
+                  startIcon={<MmsTwoToneIcon />}
+                >
+                  Add Celebrity
+                </Button>
+              </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/celebrities"
+                  startIcon={<MmsTwoToneIcon />}
+                >
+                  View All Celebrities
                 </Button>
               </ListItem>
             </List>

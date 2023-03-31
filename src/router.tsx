@@ -6,6 +6,7 @@ import SidebarLayout from 'src/layouts/SidebarLayout';
 import BaseLayout from 'src/layouts/BaseLayout';
 
 import SuspenseLoader from 'src/components/SuspenseLoader';
+import ProtectedRoute from './components/ProtectedRoutes';
 
 
 const Loader = (Component) => (props) =>
@@ -23,6 +24,13 @@ const Overview = Loader(lazy(() => import('src/content/overview')));
 
 const DashboardIndex = Loader(lazy(() => import('src/pages/Components/Dashboard/DashboardIndex')))
 
+// creator
+const CreatorIndex = Loader(lazy(() => import('src/pages/Components/MusicCreator/CreateMusicCreator')))
+
+const ViewMusicCreator = Loader(lazy(() => import('src/pages/Components/MusicCreator/View/ViewMusicCreator')))
+const CreateCelebrity = Loader(lazy(() => import('src/pages/Components/Celebrity/CreateCelebrityIndex')))
+
+const Celebrities = Loader(lazy(() => import('src/pages/Components/Celebrity/ViewCelebrities')))
 // Applications
 
 const Messenger = Loader(
@@ -64,6 +72,10 @@ const Forms = Loader(lazy(() => import('src/pages/Components/Forms')));
 
 // Status
 
+
+// Register
+const Login = Loader(lazy(() => import('src/pages/Components/Register/Login')))
+
 const Status404 = Loader(
   lazy(() => import('src/pages/Status/Status404'))
 );
@@ -77,43 +89,67 @@ const StatusMaintenance = Loader(
   lazy(() => import('src/pages/Status/Maintenance'))
 );
 
+
+
 const routes: RouteObject[] = [
   {
-    path: '',
-    element: <BaseLayout />,
+    path: '/login',
+    element: <Login />
+  },
+  {
+    path: '/',
+    element: <ProtectedRoute>
+      <SidebarLayout />
+    </ProtectedRoute>,
     children: [
       {
         path: '/',
-        element: <DashboardIndex />
+        element: <Transactions />
       },
       {
-        path: 'overview',
-        element: <Navigate to="/" replace />
+        path: '/Add-Music-Creator',
+        element: <CreatorIndex />
       },
       {
-        path: 'status',
-        children: [
-          {
-            path: '',
-            element: <Navigate to="404" replace />
-          },
-          {
-            path: '404',
-            element: <Status404 />
-          },
-          {
-            path: '500',
-            element: <Status500 />
-          },
-          {
-            path: 'maintenance',
-            element: <StatusMaintenance />
-          },
-          {
-            path: 'coming-soon',
-            element: <StatusComingSoon />
-          }
-        ]
+        path: '/create-music-creator?edit=true/:userId',
+        element: <CreatorIndex />
+      },
+      // {
+      //   path: 'status',
+      //   children: [
+      //     {
+      //       path: '',
+      //       element: <Navigate to="404" replace />
+      //     },
+      //     {
+      //       path: '404',
+      //       element: <Status404 />
+      //     },
+      //     {
+      //       path: '500',
+      //       element: <Status500 />
+      //     },
+      //     {
+      //       path: 'maintenance',
+      //       element: <StatusMaintenance />
+      //     },
+      //     {
+      //       path: 'coming-soon',
+      //       element: <StatusComingSoon />
+      //     }
+      //   ]
+      // },
+      {
+        path: '/view-music-creators',
+        element: <ProtectedRoute>
+          <ViewMusicCreator />
+        </ProtectedRoute>
+      }, {
+        path: '/create-celebrity',
+        element: <CreateCelebrity />
+      }, {
+        path: '/celebrities',
+        element: <Celebrities />
       },
       {
         path: '*',
