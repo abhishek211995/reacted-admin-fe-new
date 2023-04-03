@@ -128,7 +128,7 @@ export const CategoryList = (props: any) => {
       <Snackbar
         open={open}
         autoHideDuration={6000}
-        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+        // anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
         onClose={() => setOpen(false)}
       >
         <Alert
