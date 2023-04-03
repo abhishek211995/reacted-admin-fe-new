@@ -595,7 +595,7 @@ export const CreateCelebrityForm = (props) => {
         <Snackbar
           open={open}
           autoHideDuration={6000}
-          // anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           onClose={() => setOpen(false)}
         >
           <Alert
