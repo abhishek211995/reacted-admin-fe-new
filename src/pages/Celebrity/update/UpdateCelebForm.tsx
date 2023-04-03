@@ -115,7 +115,7 @@ const UpdateCeleberityDetails = (props: any) => {
     validateOnChange: true
   });
 
-  const handleSubmit = (data) => {
+  const handleSubmit = (data: any) => {
     // let catIdArray = [];
     // selectedCategories.map((cat) => {
     //   catIdArray.push(cat.category_id);
@@ -133,9 +133,10 @@ const UpdateCeleberityDetails = (props: any) => {
         formData.append(key, data[key]);
       }
     });
-    const mediaLinks = data.social_media_links.map((link) => ({
-      [link.platformName]: link.value
+    const mediaLinks = data.social_media_links.map((link: any) => ({
+      [link.platform]: link.value
     }));
+    console.log('medialink', mediaLinks);
     formData.append('social_media_links', JSON.stringify(mediaLinks));
     formData.append('celebrity_id', user_id ?? '');
     // formData.append('categories', categories ?? '');
@@ -492,6 +493,7 @@ const UpdateCeleberityDetails = (props: any) => {
                   </Typography>
                   <TextField fullWidth label="Paypal ID" name="paypalID"  variant="outlined" />
                 </Grid> */}
+              {console.log('SOCIAL MEDIA', formik.values.social_media_links)}
             </Grid>
           </CardContent>
           <Divider />
@@ -505,22 +507,26 @@ const UpdateCeleberityDetails = (props: any) => {
                 name="social_media_links"
                 render={() => (
                   <>
-                    {formik.values.social_media_links.map((platform, index) => {
-                      return (
-                        <Grid key={index} item md={6} xs={12}>
-                          <Field name={`social_media_links.${index}.value`}>
-                            {({ field }) => (
-                              <TextField
-                                fullWidth
-                                label={platform.platform}
-                                variant="outlined"
-                                {...field}
-                              />
-                            )}
-                          </Field>
-                        </Grid>
-                      );
-                    })}
+                    {formik.values.social_media_links.map(
+                      (platform: any, index: number) => {
+                        console.log('platform', platform);
+                        console.log('index', index);
+                        return (
+                          <Grid key={index} item md={6} xs={12}>
+                            <Field name={`social_media_links.${index}.value`}>
+                              {({ field }) => (
+                                <TextField
+                                  fullWidth
+                                  label={platform.platform}
+                                  variant="outlined"
+                                  {...field}
+                                />
+                              )}
+                            </Field>
+                          </Grid>
+                        );
+                      }
+                    )}
                   </>
                 )}
               />
