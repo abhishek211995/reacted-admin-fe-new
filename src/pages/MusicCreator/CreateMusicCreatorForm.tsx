@@ -198,203 +198,217 @@ export const CreateMusicCreatorForm = (props: any) => {
   };
   console.log('creatorValues', creatorValues);
   return (
-    <FormikProvider value={formik}>
-      <form autoComplete="off" noValidate onSubmit={formik.handleSubmit}>
-        <Card>
-          <CardHeader subheader="" title="Add Music Creator" />
-          <Divider />
-          <CardContent>
-            <Typography sx={{ mb: 3 }} variant="h6">
-              Basic Info
-            </Typography>
-            <Grid container spacing={3}>
-              <Grid item md={12} xs={12}>
-                <Button variant="contained" component="label">
-                  Upload Profile Photos
-                  <TextField
-                    type="file"
-                    hidden
-                    name="profile_picture"
-                    // accept="image/*"
-                    onChange={(e) => handleChangeUpload(e, 'profile')}
-                    error={Boolean(formik.errors.profile_picture)}
-                    helperText={formik.errors.profile_picture}
-                    // multiple={false}
-                  />
-                </Button>
-                <span style={{ paddingLeft: '1rem' }}>
-                  {uploadProfilePicture?.name}{' '}
-                </span>
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="First name"
-                  name="first_name"
-                  variant="outlined"
-                  value={formik.values.first_name}
-                  onChange={formik.handleChange}
-                  error={Boolean(formik.errors.first_name)}
-                  helperText={formik.errors.first_name}
-                  required
-                />
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Last name"
-                  name="last_name"
-                  variant="outlined"
-                  value={formik.values.last_name}
-                  onChange={formik.handleChange}
-                  error={Boolean(formik.errors.last_name)}
-                  helperText={formik.errors.last_name}
-                  required
-                />
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Artist Name"
-                  name="artist_name"
-                  variant="outlined"
-                  value={formik.values.artist_name}
-                  onChange={formik.handleChange}
-                  error={Boolean(formik.errors.artist_name)}
-                  helperText={formik.errors.artist_name}
-                  required
-                />
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Email Address"
-                  name="email"
-                  variant="outlined"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  error={Boolean(formik.errors.email)}
-                  helperText={formik.errors.email}
-                  required
-                />
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Phone Number"
-                  name="phone"
-                  type="number"
-                  variant="outlined"
-                  value={formik.values.phone}
-                  onChange={formik.handleChange}
-                  error={Boolean(formik.errors.phone)}
-                  helperText={formik.errors.phone}
-                  required
-                />
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Country"
-                  name="country"
-                  variant="outlined"
-                  value={formik.values.country}
-                  onChange={formik.handleChange}
-                  error={Boolean(formik.errors.country)}
-                  helperText={formik.errors.country}
-                  required
-                />
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <Autocomplete
-                  multiple
-                  fullWidth
-                  onChange={(event, value) => {
-                    formik.setFieldValue('categories', value);
-                    setSelectedCategories(value);
-                  }}
-                  id="checkboxes-tags-demo"
-                  options={categoriesOptions}
-                  disableCloseOnSelect
-                  getOptionLabel={(option: any) => option?.category_name}
-                  // getOptionValue={(option: any) => option?.category_id}
-                  renderOption={(props, option: any, { selected }) => (
-                    <li {...props}>
-                      <Checkbox
-                        icon={icon}
-                        checkedIcon={checkedIcon}
-                        style={{ marginRight: 8 }}
-                        checked={selected}
-                      />
-                      {option.category_name}
-                    </li>
-                  )}
-                  renderInput={(params) => (
-                    <TextField {...params} label="Categories" placeholder="" />
-                  )}
-                />
-              </Grid>
-              <Grid item md={6} xs={12}>
-                <TextField
-                  fullWidth
-                  label="Description"
-                  name="description"
-                  variant="outlined"
-                  value={formik.values.description}
-                  onChange={formik.handleChange}
-                  error={Boolean(formik.errors.description)}
-                  helperText={formik.errors.description}
-                  required
-                />
-              </Grid>
-            </Grid>
-          </CardContent>
-          <Divider />
-          <Divider />
-
-          <Divider />
-          <CardContent>
-            <Grid item md={12} xs={12}>
+    <>
+      <FormikProvider value={formik}>
+        <form autoComplete="off" noValidate onSubmit={formik.handleSubmit}>
+          <Card>
+            <CardHeader subheader="" title="Add Music Creator" />
+            <Divider />
+            <CardContent>
               <Typography sx={{ mb: 3 }} variant="h6">
-                Upload Celebrity Music
+                Basic Info
               </Typography>
-              <Grid item md={12} xs={12}>
-                <Button variant="contained" component="label">
-                  Upload Music
+              <Grid container spacing={3}>
+                <Grid item md={12} xs={12}>
+                  <Button variant="contained" component="label">
+                    Upload Profile Photos
+                    <TextField
+                      type="file"
+                      hidden
+                      name="profile_picture"
+                      // accept="image/*"
+                      onChange={(e) => handleChangeUpload(e, 'profile')}
+                      error={Boolean(formik.errors.profile_picture)}
+                      helperText={formik.errors.profile_picture}
+                      // multiple={false}
+                    />
+                  </Button>
+                  <span style={{ paddingLeft: '1rem' }}>
+                    {uploadProfilePicture?.name}{' '}
+                  </span>
+                </Grid>
+                <Grid item md={6} xs={12}>
                   <TextField
-                    type="file"
-                    hidden
-                    name="music"
-                    // accept=".mp3,audio/*"
-                    onChange={(e) => handleChangeUpload(e, 'music')}
-                    error={Boolean(formik.errors.music)}
-                    helperText={formik.errors.music}
+                    fullWidth
+                    label="First name"
+                    name="first_name"
+                    variant="outlined"
+                    value={formik.values.first_name}
+                    onChange={formik.handleChange}
+                    error={Boolean(formik.errors.first_name)}
+                    helperText={formik.errors.first_name}
+                    required
                   />
-                </Button>
-                <span style={{ paddingLeft: '1rem' }}>
-                  {uploadMusicFile?.[0] ? uploadMusicFile?.[0]?.name : ''}
-                </span>
+                </Grid>
+                <Grid item md={6} xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Last name"
+                    name="last_name"
+                    variant="outlined"
+                    value={formik.values.last_name}
+                    onChange={formik.handleChange}
+                    error={Boolean(formik.errors.last_name)}
+                    helperText={formik.errors.last_name}
+                    required
+                  />
+                </Grid>
+                <Grid item md={6} xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Artist Name"
+                    name="artist_name"
+                    variant="outlined"
+                    value={formik.values.artist_name}
+                    onChange={formik.handleChange}
+                    error={Boolean(formik.errors.artist_name)}
+                    helperText={formik.errors.artist_name}
+                    required
+                  />
+                </Grid>
+                <Grid item md={6} xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Email Address"
+                    name="email"
+                    variant="outlined"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    error={Boolean(formik.errors.email)}
+                    helperText={formik.errors.email}
+                    required
+                  />
+                </Grid>
+                <Grid item md={6} xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Phone Number"
+                    name="phone"
+                    type="number"
+                    variant="outlined"
+                    value={formik.values.phone}
+                    onChange={formik.handleChange}
+                    error={Boolean(formik.errors.phone)}
+                    helperText={formik.errors.phone}
+                    required
+                  />
+                </Grid>
+                <Grid item md={6} xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Country"
+                    name="country"
+                    variant="outlined"
+                    value={formik.values.country}
+                    onChange={formik.handleChange}
+                    error={Boolean(formik.errors.country)}
+                    helperText={formik.errors.country}
+                    required
+                  />
+                </Grid>
+                <Grid item md={6} xs={12}>
+                  <Autocomplete
+                    multiple
+                    fullWidth
+                    onChange={(event, value) => {
+                      formik.setFieldValue('categories', value);
+                      setSelectedCategories(value);
+                    }}
+                    id="checkboxes-tags-demo"
+                    options={categoriesOptions}
+                    disableCloseOnSelect
+                    getOptionLabel={(option: any) => option?.category_name}
+                    // getOptionValue={(option: any) => option?.category_id}
+                    renderOption={(props, option: any, { selected }) => (
+                      <li {...props}>
+                        <Checkbox
+                          icon={icon}
+                          checkedIcon={checkedIcon}
+                          style={{ marginRight: 8 }}
+                          checked={selected}
+                        />
+                        {option.category_name}
+                      </li>
+                    )}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Categories"
+                        placeholder=""
+                      />
+                    )}
+                  />
+                </Grid>
+                <Grid item md={6} xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Description"
+                    name="description"
+                    variant="outlined"
+                    value={formik.values.description}
+                    onChange={formik.handleChange}
+                    error={Boolean(formik.errors.description)}
+                    helperText={formik.errors.description}
+                    required
+                  />
+                </Grid>
               </Grid>
-            </Grid>
-          </CardContent>
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'flex-end',
-              p: 2
-            }}
-          >
-            <Button color="primary" variant="contained" type="submit">
-              Save details
-            </Button>
-          </Box>
-        </Card>
-      </form>
+            </CardContent>
+            <Divider />
+            <Divider />
+
+            <Divider />
+            <CardContent>
+              <Grid item md={12} xs={12}>
+                <Typography sx={{ mb: 3 }} variant="h6">
+                  Upload Celebrity Music
+                </Typography>
+                <Grid item md={12} xs={12}>
+                  <Button variant="contained" component="label">
+                    Upload Music
+                    <TextField
+                      type="file"
+                      hidden
+                      name="music"
+                      // accept=".mp3,audio/*"
+                      onChange={(e) => handleChangeUpload(e, 'music')}
+                      error={Boolean(formik.errors.music)}
+                      helperText={formik.errors.music}
+                    />
+                  </Button>
+                  <span style={{ paddingLeft: '1rem' }}>
+                    {uploadMusicFile?.[0] ? uploadMusicFile?.[0]?.name : ''}
+                  </span>
+                </Grid>
+              </Grid>
+            </CardContent>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                p: 2
+              }}
+            >
+              <Button color="primary" variant="contained" type="submit">
+                Save details
+              </Button>
+            </Box>
+          </Card>
+        </form>
+      </FormikProvider>
       <Snackbar
         open={open}
-        autoHideDuration={1000}
+        autoHideDuration={100000}
         //  // anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+        // anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+        sx={{
+          zIndex: '99999999999'
+        }}
+        // style={{
+        //   position: 'relative',
+        //   zIndex: '999999',
+        //   top: 0
+        // }}
         onClose={() => setOpen(false)}
       >
         <Alert
@@ -405,6 +419,6 @@ export const CreateMusicCreatorForm = (props: any) => {
           {msg}
         </Alert>
       </Snackbar>
-    </FormikProvider>
+    </>
   );
 };
