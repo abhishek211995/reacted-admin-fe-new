@@ -392,6 +392,7 @@ export const CreateMusicCreatorForm = (props: any) => {
       </form>
       <Snackbar
         open={open}
+        sx={{position: 'relative', z-index: 9999}}
         autoHideDuration={1000}
         //  // anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
