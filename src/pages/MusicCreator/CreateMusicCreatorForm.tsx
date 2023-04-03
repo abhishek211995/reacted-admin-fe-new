@@ -398,9 +398,8 @@ export const CreateMusicCreatorForm = (props: any) => {
       </FormikProvider>
       <Snackbar
         open={open}
-        autoHideDuration={100000}
-        //  // anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-        // anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+        autoHideDuration={1000}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         sx={{
           zIndex: '99999999999'
         }}
