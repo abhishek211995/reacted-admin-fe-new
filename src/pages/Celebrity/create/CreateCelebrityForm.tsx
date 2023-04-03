@@ -139,6 +139,7 @@ export const CreateCelebrityForm = (props) => {
         } else {
           setSeverity('error');
         }
+        
         setOpen(true);
         console.log('in success response', response);
         setMessage(response.data.message);
