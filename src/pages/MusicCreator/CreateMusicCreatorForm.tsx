@@ -25,6 +25,7 @@ import axios from 'axios';
 import { baseUrl } from 'src/constants/constants';
 import { createMusicCreatorSchema } from 'src/utils/validators';
 import { useLocation, useParams } from 'react-router';
+import SuspenseLoader from 'src/components/SuspenseLoader';
 
 export const CreateMusicCreatorForm = (props: any) => {
   const [categoriesOptions, setCategoriesOptions] = useState<any>([]);
@@ -36,6 +37,7 @@ export const CreateMusicCreatorForm = (props: any) => {
   const [editMode, setEditMode] = useState(false);
   const [open, setOpen] = useState(false);
   const [msg, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [creatorValues, setCreator] = useState<any>({
     first_name: '',
     last_name: '',
@@ -50,7 +52,7 @@ export const CreateMusicCreatorForm = (props: any) => {
       value: ''
     }))
   });
-  console.log('upload Music', uploadMusicFile);
+  console.log('social media', socialMediaPlatforms);
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
   useEffect(() => {
@@ -116,6 +118,7 @@ export const CreateMusicCreatorForm = (props: any) => {
     validateOnChange: false
   });
   const handleSubmit = async (data: any) => {
+    setIsLoading(true);
     let catIdArray = [];
     let socialMediaLinksArray = [];
 
@@ -137,6 +140,7 @@ export const CreateMusicCreatorForm = (props: any) => {
       [link.platformName]: link.value
     }));
     formData.append('social_media_links', JSON.stringify(mediaLinks));
+    console.log('formdata', formData.getAll('social_media_links'));
 
     if (editMode) {
       axios
@@ -149,7 +153,7 @@ export const CreateMusicCreatorForm = (props: any) => {
           }
         })
         .then((response) => {
-          console.log('response', response);
+          setIsLoading(false);
           if (response.data.success) {
             setSeverity('success');
           } else {
@@ -164,7 +168,6 @@ export const CreateMusicCreatorForm = (props: any) => {
           console.log(error, 'Could not add music creator');
         });
     } else {
-      // formData.append('step', 'upload');
       axios
         .post(baseUrl + '/add_music_creator_by_admin', formData, {
           headers: {
@@ -175,6 +178,7 @@ export const CreateMusicCreatorForm = (props: any) => {
           }
         })
         .then((response) => {
+          setIsLoading(false);
           console.log('response', response);
           if (response.data.success) {
             setSeverity('success');
@@ -212,17 +216,16 @@ export const CreateMusicCreatorForm = (props: any) => {
                 <Grid item md={12} xs={12}>
                   <Button variant="contained" component="label">
                     Upload Profile Photos
-                    <TextField
+                    <input
                       type="file"
                       hidden
+                      multiple
                       name="profile_picture"
-                      // accept="image/*"
+                      accept="image/*"
                       onChange={(e) => handleChangeUpload(e, 'profile')}
-                      error={Boolean(formik.errors.profile_picture)}
-                      helperText={formik.errors.profile_picture}
-                      // multiple={false}
                     />
                   </Button>
+
                   <span style={{ paddingLeft: '1rem' }}>
                     {uploadProfilePicture?.name}{' '}
                   </span>
@@ -366,14 +369,12 @@ export const CreateMusicCreatorForm = (props: any) => {
                 <Grid item md={12} xs={12}>
                   <Button variant="contained" component="label">
                     Upload Music
-                    <TextField
+                    <input
                       type="file"
                       hidden
                       name="music"
                       // accept=".mp3,audio/*"
                       onChange={(e) => handleChangeUpload(e, 'music')}
-                      error={Boolean(formik.errors.music)}
-                      helperText={formik.errors.music}
                     />
                   </Button>
                   <span style={{ paddingLeft: '1rem' }}>
@@ -382,6 +383,7 @@ export const CreateMusicCreatorForm = (props: any) => {
                 </Grid>
               </Grid>
             </CardContent>
+
             <Box
               sx={{
                 display: 'flex',
@@ -389,6 +391,7 @@ export const CreateMusicCreatorForm = (props: any) => {
                 p: 2
               }}
             >
+              <span>{isLoading && <SuspenseLoader />}</span>
               <Button color="primary" variant="contained" type="submit">
                 Save details
               </Button>
@@ -403,11 +406,6 @@ export const CreateMusicCreatorForm = (props: any) => {
         sx={{
           zIndex: '99999999999'
         }}
-        // style={{
-        //   position: 'relative',
-        //   zIndex: '999999',
-        //   top: 0
-        // }}
         onClose={() => setOpen(false)}
       >
         <Alert

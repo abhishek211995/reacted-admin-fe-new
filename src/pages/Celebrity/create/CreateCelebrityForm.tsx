@@ -30,6 +30,7 @@ import axios from 'axios';
 import { baseUrl } from 'src/constants/constants';
 import { createCelebritySchema } from 'src/utils/validators';
 import { removeItemAtIndex } from 'src/utils/arrayUtils';
+import SuspenseLoader from 'src/components/SuspenseLoader';
 
 // import { Stack } from "@mui/system";
 
@@ -44,6 +45,7 @@ export const CreateCelebrityForm = (props) => {
   const [socialMediaPlatforms, setPlatforms] = useState([]);
   const [open, setOpen] = useState(false);
   const [msg, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -99,7 +101,8 @@ export const CreateCelebrityForm = (props) => {
     validateOnChange: true
   });
 
-  const handleSubmit = (data) => {
+  const handleSubmit = (data: any) => {
+    setIsLoading(true);
     let catIdArray = [];
     selectedCategories.map((cat) => {
       catIdArray.push(cat.category_id);
@@ -129,6 +132,7 @@ export const CreateCelebrityForm = (props) => {
       })
       .then((response) => {
         if (response.data.success === 1) {
+          setIsLoading(false);
           setSeverity('success');
         } else if (response.data.success === 0) {
           setSeverity('warning');
@@ -140,6 +144,7 @@ export const CreateCelebrityForm = (props) => {
         setMessage(response.data.message);
       })
       .catch((error) => {
+        setIsLoading(false);
         setSeverity('error');
         setMessage(error?.message);
         setOpen(true);
@@ -548,7 +553,7 @@ export const CreateCelebrityForm = (props) => {
               </Grid>
             </Grid>
           </CardContent>
-
+          {isLoading && <SuspenseLoader />}
           <Divider />
 
           {/* <CardContent>
