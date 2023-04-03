@@ -28,10 +28,10 @@ import { useLocation, useParams } from 'react-router';
 
 export const CreateMusicCreatorForm = (props: any) => {
   const [categoriesOptions, setCategoriesOptions] = useState<any>([]);
-  const [selectedCategories, setSelectedCategories] = useState<any>([]);
+  const [selectedCategories, setSelectedCategories] = useState<any[]>([]);
   const [uploadProfilePicture, setUploadProfilePicture] = useState<any>('');
   const [severity, setSeverity] = useState<any>('info');
-  const [uploadMusicFile, setUploadMusicFile] = useState('');
+  const [uploadMusicFile, setUploadMusicFile] = useState<any>('');
   const [socialMediaPlatforms, setPlatforms] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [open, setOpen] = useState(false);
@@ -50,6 +50,7 @@ export const CreateMusicCreatorForm = (props: any) => {
       value: ''
     }))
   });
+  console.log('upload Music', uploadMusicFile);
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
   useEffect(() => {
@@ -73,7 +74,7 @@ export const CreateMusicCreatorForm = (props: any) => {
       fetchCreator(userId);
     }
   }, [editMode, userId]);
-  const fetchCreator = async (userId) => {
+  const fetchCreator = async (userId: any) => {
     axios
       .get(baseUrl + `/get_music_creator?music_creator_id=${userId}`)
       .then((response) => {
@@ -114,7 +115,7 @@ export const CreateMusicCreatorForm = (props: any) => {
     enableReinitialize: true,
     validateOnChange: false
   });
-  const handleSubmit = async (data) => {
+  const handleSubmit = async (data: any) => {
     let catIdArray = [];
     let socialMediaLinksArray = [];
 
@@ -137,34 +138,63 @@ export const CreateMusicCreatorForm = (props: any) => {
     }));
     formData.append('social_media_links', JSON.stringify(mediaLinks));
 
-    axios
-      .post(baseUrl + '/update_music_creator', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `${localStorage
-            .getItem('access_key')
-            ?.replaceAll('"', '')}`
-        }
-      })
-      .then((response) => {
-        console.log('response', response);
-        if (response.data.success) {
-          setSeverity('success');
-        } else {
-          setSeverity('error');
-        }
-        setOpen(true);
-        setMessage(response.data.message);
-      })
-      .catch((error) => {
-        console.log(error, 'Could not add music creator');
-      });
+    if (editMode) {
+      axios
+        .post(baseUrl + '/update_music_creator', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `${localStorage
+              .getItem('access_key')
+              ?.replaceAll('"', '')}`
+          }
+        })
+        .then((response) => {
+          console.log('response', response);
+          if (response.data.success) {
+            setSeverity('success');
+          } else {
+            setSeverity('error');
+          }
+          console.log('then');
+          console.log(severity);
+          setOpen(true);
+          setMessage(response.data.message);
+        })
+        .catch((error) => {
+          console.log(error, 'Could not add music creator');
+        });
+    } else {
+      // formData.append('step', 'upload');
+      axios
+        .post(baseUrl + '/add_music_creator_by_admin', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `${localStorage
+              .getItem('access_key')
+              ?.replaceAll('"', '')}`
+          }
+        })
+        .then((response) => {
+          console.log('response', response);
+          if (response.data.success) {
+            setSeverity('success');
+          } else {
+            setSeverity('error');
+          }
+          setOpen(true);
+          setMessage(response.data.message);
+        })
+        .catch((error) => {
+          console.log(error, 'Could not add music creator');
+        });
+    }
   };
-  const handleChangeUpload = (event, type) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    type === 'profile'
-      ? setUploadProfilePicture(event?.currentTarget?.files[0])
-      : setUploadMusicFile(event?.currentTarget?.files[0]);
+  const handleChangeUpload = (event: any, type: string) => {
+    if (type === 'profile') {
+      setUploadProfilePicture(event?.currentTarget?.files[0]);
+    } else {
+      setUploadMusicFile(event?.currentTarget?.files[0]);
+    }
   };
   console.log('creatorValues', creatorValues);
   return (
@@ -181,15 +211,15 @@ export const CreateMusicCreatorForm = (props: any) => {
               <Grid item md={12} xs={12}>
                 <Button variant="contained" component="label">
                   Upload Profile Photos
-                  <input
+                  <TextField
                     type="file"
                     hidden
                     name="profile_picture"
-                    accept="image/*"
+                    // accept="image/*"
                     onChange={(e) => handleChangeUpload(e, 'profile')}
-                    // error={Boolean(formik.errors.profile_picture)}
-                    // helperText={formik.errors.profile_picture}
-                    multiple={false}
+                    error={Boolean(formik.errors.profile_picture)}
+                    helperText={formik.errors.profile_picture}
+                    // multiple={false}
                   />
                 </Button>
                 <span style={{ paddingLeft: '1rem' }}>
@@ -279,18 +309,16 @@ export const CreateMusicCreatorForm = (props: any) => {
                 <Autocomplete
                   multiple
                   fullWidth
-                  onChange={(event, value: any) => {
+                  onChange={(event, value) => {
                     formik.setFieldValue('categories', value);
                     setSelectedCategories(value);
                   }}
                   id="checkboxes-tags-demo"
                   options={categoriesOptions}
                   disableCloseOnSelect
-                  getOptionLabel={(option) => option?.category_name}
-                  // getOptionValue={(option) => option?.category_id}
-                  // filterSelectedOptions={((option: any) => option?.category_id)}
-
-                  renderOption={(props, option, { selected }) => (
+                  getOptionLabel={(option: any) => option?.category_name}
+                  // getOptionValue={(option: any) => option?.category_id}
+                  renderOption={(props, option: any, { selected }) => (
                     <li {...props}>
                       <Checkbox
                         icon={icon}
@@ -322,31 +350,6 @@ export const CreateMusicCreatorForm = (props: any) => {
             </Grid>
           </CardContent>
           <Divider />
-          <CardContent>
-            <Typography sx={{ mb: 3 }} variant="h6">
-              Social Media Links
-            </Typography>
-            <Grid container spacing={3}>
-              <FieldArray validateOnChange={false} name="social_media_links">
-                {formik.values.social_media_links.map((platform, index) => {
-                  return (
-                    <Grid key={index} item md={6} xs={12}>
-                      <Field name={`social_media_links.${index}.value`}>
-                        {({ field }) => (
-                          <TextField
-                            fullWidth
-                            label={platform.platformName}
-                            variant="outlined"
-                            {...field}
-                          />
-                        )}
-                      </Field>
-                    </Grid>
-                  );
-                })}
-              </FieldArray>
-            </Grid>
-          </CardContent>
           <Divider />
 
           <Divider />
@@ -358,17 +361,19 @@ export const CreateMusicCreatorForm = (props: any) => {
               <Grid item md={12} xs={12}>
                 <Button variant="contained" component="label">
                   Upload Music
-                  <input
+                  <TextField
                     type="file"
                     hidden
                     name="music"
-                    accept=".mp3,audio/*"
+                    // accept=".mp3,audio/*"
                     onChange={(e) => handleChangeUpload(e, 'music')}
-                    // error={Boolean(formik.errors?.name)}
-                    // helperText={formik.errors?.music}
+                    error={Boolean(formik.errors.music)}
+                    helperText={formik.errors.music}
                   />
                 </Button>
-                <span style={{ paddingLeft: '1rem' }}>{uploadMusicFile} </span>
+                <span style={{ paddingLeft: '1rem' }}>
+                  {uploadMusicFile?.[0] ? uploadMusicFile?.[0]?.name : ''}
+                </span>
               </Grid>
             </Grid>
           </CardContent>
@@ -384,21 +389,22 @@ export const CreateMusicCreatorForm = (props: any) => {
             </Button>
           </Box>
         </Card>
-        <Snackbar
-          open={open}
-          autoHideDuration={1000}
-          anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-          onClose={() => setOpen(false)}
-        >
-          <Alert
-            sx={{ width: '100%', color: '#fff' }}
-            variant="filled"
-            severity={severity}
-          >
-            {msg}
-          </Alert>
-        </Snackbar>
       </form>
+      <Snackbar
+        open={open}
+        autoHideDuration={1000}
+        //  // anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+        onClose={() => setOpen(false)}
+      >
+        <Alert
+          sx={{ width: '100%', color: '#fff' }}
+          variant="filled"
+          severity={severity}
+        >
+          {msg}
+        </Alert>
+      </Snackbar>
     </FormikProvider>
   );
 };

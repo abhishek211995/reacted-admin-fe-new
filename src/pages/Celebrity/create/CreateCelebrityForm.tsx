@@ -140,6 +140,9 @@ export const CreateCelebrityForm = (props) => {
         setMessage(response.data.message);
       })
       .catch((error) => {
+        setSeverity('error');
+        setMessage(error?.message);
+        setOpen(true);
         console.log(error?.message, 'Could not add celebrity');
       });
   };
@@ -592,7 +595,7 @@ export const CreateCelebrityForm = (props) => {
         <Snackbar
           open={open}
           autoHideDuration={6000}
-          anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+          // anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
           onClose={() => setOpen(false)}
         >
           <Alert
