@@ -37,6 +37,7 @@ import SuspenseLoader from 'src/components/SuspenseLoader';
 //TODO:
 // validation message check,
 // catergory validation check
+
 export const CreateCelebrityForm = (props) => {
   const [categoriesOptions, setCategoriesOptions] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState<any[]>([]);
@@ -57,7 +58,30 @@ export const CreateCelebrityForm = (props) => {
 
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
-
+  const initialValues = {
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone: '',
+    title: '',
+    tag_line: '',
+    short_description: '',
+    long_description: '',
+    categories: [],
+    price: '',
+    is_featured: true,
+    country: '',
+    profile_picture: '',
+    account_name: '',
+    account_number: '',
+    bank_name: '',
+    bank_code: '',
+    bank_address: '',
+    social_media_links: socialMediaPlatforms.map((p) => ({
+      platformName: p.platform_name,
+      value: ''
+    }))
+  };
   useEffect(() => {
     axios.get(baseUrl + '/get_category').then((response) => {
       setCategoriesOptions(response?.data?.data);
@@ -68,40 +92,20 @@ export const CreateCelebrityForm = (props) => {
   }, []);
 
   const formik = useFormik({
-    initialValues: {
-      first_name: '',
-      last_name: '',
-      email: '',
-      phone: '',
-      title: '',
-      tag_line: '',
-      short_description: '',
-      long_description: '',
-      categories: [],
-      price: '',
-      is_featured: true,
-      country: '',
-      profile_picture: '',
-      account_name: '',
-      account_number: '',
-      bank_name: '',
-      bank_code: '',
-      bank_address: '',
-      social_media_links: socialMediaPlatforms.map((p) => ({
-        platformName: p.platform_name,
-        value: ''
-      }))
-    },
+    initialValues: initialValues,
     validationSchema: createCelebritySchema,
-    onSubmit: (data) => {
-      handleSubmit(data);
-      console.log(data);
+    onSubmit: (data, action) => {
+      handleSubmit(data).then(() => {
+        action.resetForm({
+          values: initialValues
+        });
+      });
     },
     enableReinitialize: true,
     validateOnChange: true
   });
 
-  const handleSubmit = (data: any) => {
+  const handleSubmit = async (data: any) => {
     setIsLoading(true);
     let catIdArray = [];
     selectedCategories.map((cat) => {
@@ -139,7 +143,7 @@ export const CreateCelebrityForm = (props) => {
         } else {
           setSeverity('error');
         }
-        
+        setIsLoading(false);
         setOpen(true);
         console.log('in success response', response);
         setMessage(response.data.message);
@@ -151,6 +155,7 @@ export const CreateCelebrityForm = (props) => {
         setOpen(true);
         console.log(error?.message, 'Could not add celebrity');
       });
+    // setIsLoading(false);
   };
   const handleChangeProfilePicture = (event) => {
     let selectedFIles = [];

@@ -111,8 +111,25 @@ export const CreateMusicCreatorForm = (props: any) => {
   const formik = useFormik({
     initialValues: creatorValues,
     validationSchema: createMusicCreatorSchema,
-    onSubmit: (data) => {
-      handleSubmit(data);
+    onSubmit: (data, action) => {
+      handleSubmit(data).then(() => {
+        action.resetForm({
+          values: {
+            first_name: '',
+            last_name: '',
+            email: '',
+            phone: '',
+            artist_name: '',
+            description: '',
+            categories: '',
+            country: '',
+            social_media_links: socialMediaPlatforms.map((p) => ({
+              platformName: p.platform_name,
+              value: ''
+            }))
+          }
+        });
+      });
     },
     enableReinitialize: true,
     validateOnChange: false
