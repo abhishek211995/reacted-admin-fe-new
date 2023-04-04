@@ -20,7 +20,13 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import { Field, FieldArray, FormikProvider, useFormik } from 'formik';
+import {
+  Field,
+  FieldArray,
+  FormikHelpers,
+  FormikProvider,
+  useFormik
+} from 'formik';
 import axios from 'axios';
 import { baseUrl } from 'src/constants/constants';
 import { createMusicCreatorSchema } from 'src/utils/validators';
@@ -112,29 +118,12 @@ export const CreateMusicCreatorForm = (props: any) => {
     initialValues: creatorValues,
     validationSchema: createMusicCreatorSchema,
     onSubmit: (data, action) => {
-      handleSubmit(data).then(() => {
-        action.resetForm({
-          values: {
-            first_name: '',
-            last_name: '',
-            email: '',
-            phone: '',
-            artist_name: '',
-            description: '',
-            categories: '',
-            country: '',
-            social_media_links: socialMediaPlatforms.map((p) => ({
-              platformName: p.platform_name,
-              value: ''
-            }))
-          }
-        });
-      });
+      handleSubmit(data, action);
     },
     enableReinitialize: true,
     validateOnChange: false
   });
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (data: any, action: FormikHelpers<any>) => {
     setIsLoading(true);
     let catIdArray = [];
     let socialMediaLinksArray = [];
@@ -173,12 +162,28 @@ export const CreateMusicCreatorForm = (props: any) => {
           setIsLoading(false);
           if (response.data.success) {
             setSeverity('success');
+            action.resetForm({
+              values: {
+                first_name: '',
+                last_name: '',
+                email: '',
+                phone: '',
+                artist_name: '',
+                description: '',
+                categories: '',
+                country: '',
+                social_media_links: socialMediaPlatforms.map((p) => ({
+                  platformName: p.platform_name,
+                  value: ''
+                }))
+              }
+            });
           } else {
             setSeverity('error');
           }
-          console.log('then');
-          console.log(severity);
+
           setOpen(true);
+
           setMessage(response.data.message);
         })
         .catch((error) => {
@@ -198,6 +203,22 @@ export const CreateMusicCreatorForm = (props: any) => {
           setIsLoading(false);
           console.log('response', response);
           if (response.data.success) {
+            action.resetForm({
+              values: {
+                first_name: '',
+                last_name: '',
+                email: '',
+                phone: '',
+                artist_name: '',
+                description: '',
+                categories: '',
+                country: '',
+                social_media_links: socialMediaPlatforms.map((p) => ({
+                  platformName: p.platform_name,
+                  value: ''
+                }))
+              }
+            });
             setSeverity('success');
           } else {
             setSeverity('error');
@@ -409,7 +430,12 @@ export const CreateMusicCreatorForm = (props: any) => {
               }}
             >
               <span>{isLoading && <SuspenseLoader />}</span>
-              <Button color="primary" variant="contained" type="submit">
+              <Button
+                color="primary"
+                disabled={isLoading}
+                variant="contained"
+                type="submit"
+              >
                 Save details
               </Button>
             </Box>

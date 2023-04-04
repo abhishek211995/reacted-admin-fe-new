@@ -26,14 +26,16 @@ import {
 } from '@mui/material';
 
 import Label from 'src/components/Label';
-import { CryptoOrder, CryptoOrderStatus } from 'src/models/crypto_order';
+import { CryptoOrderStatus, OrderItemData } from 'src/models/crypto_order';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import BulkActions from './BulkActions';
+import { useNavigate } from 'react-router';
+import { RemoveRedEyeOutlined, RemoveRedEyeRounded } from '@mui/icons-material';
 
 interface RecentOrdersTableProps {
   className?: string;
-  cryptoOrders: CryptoOrder[];
+  orderDetails: OrderItemData[];
 }
 
 interface Filters {
@@ -42,33 +44,33 @@ interface Filters {
 
 const getStatusLabel = (cryptoOrderStatus: CryptoOrderStatus): JSX.Element => {
   const map = {
-    failed: {
+    'In PRogress': {
       text: 'Failed',
       color: 'error'
     },
-    completed: {
+    Completed: {
       text: 'Completed',
       color: 'success'
     },
-    pending: {
+    Pending: {
       text: 'Pending',
       color: 'warning'
     }
   };
 
-  const { text, color }: any = map[cryptoOrderStatus];
+  const status = map[cryptoOrderStatus];
 
-  return <Label color={color}>{text}</Label>;
+  return <Label color={status?.color}>{status?.text}</Label>;
 };
 
 const applyFilters = (
-  cryptoOrders: CryptoOrder[],
+  orderDetails: OrderItemData[],
   filters: Filters
-): CryptoOrder[] => {
-  return cryptoOrders.filter((cryptoOrder) => {
+): OrderItemData[] => {
+  return orderDetails.filter((order) => {
     let matches = true;
 
-    if (filters.status && cryptoOrder.status !== filters.status) {
+    if (filters.status && order?.eOrderStatus !== filters.status) {
       matches = false;
     }
 
@@ -77,14 +79,16 @@ const applyFilters = (
 };
 
 const applyPagination = (
-  cryptoOrders: CryptoOrder[],
+  orderDetails: OrderItemData[],
   page: number,
   limit: number
-): CryptoOrder[] => {
-  return cryptoOrders.slice(page * limit, page * limit + limit);
+): OrderItemData[] => {
+  return orderDetails.slice(page * limit, page * limit + limit);
 };
 
-const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
+export const RecentOrdersTable: FC<RecentOrdersTableProps> = ({
+  orderDetails
+}) => {
   const [selectedCryptoOrders, setSelectedCryptoOrders] = useState<string[]>(
     []
   );
@@ -101,16 +105,16 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
       name: 'All'
     },
     {
-      id: 'completed',
+      id: 'Completed',
       name: 'Completed'
     },
     {
-      id: 'pending',
+      id: 'Pending',
       name: 'Pending'
     },
     {
-      id: 'failed',
-      name: 'Failed'
+      id: 'In Progress',
+      name: 'In Progress'
     }
   ];
 
@@ -131,9 +135,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
     event: ChangeEvent<HTMLInputElement>
   ): void => {
     setSelectedCryptoOrders(
-      event.target.checked
-        ? cryptoOrders.map((cryptoOrder) => cryptoOrder.id)
-        : []
+      event.target.checked ? orderDetails.map((order) => order?.iOrderId) : []
     );
   };
 
@@ -161,7 +163,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
     setLimit(parseInt(event.target.value));
   };
 
-  const filteredCryptoOrders = applyFilters(cryptoOrders, filters);
+  const filteredCryptoOrders = applyFilters(orderDetails, filters);
   const paginatedCryptoOrders = applyPagination(
     filteredCryptoOrders,
     page,
@@ -169,10 +171,12 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
   );
   const selectedSomeCryptoOrders =
     selectedCryptoOrders.length > 0 &&
-    selectedCryptoOrders.length < cryptoOrders.length;
+    selectedCryptoOrders.length < orderDetails.length;
   const selectedAllCryptoOrders =
-    selectedCryptoOrders.length === cryptoOrders.length;
+    selectedCryptoOrders.length === orderDetails.length;
   const theme = useTheme();
+
+  const router = useNavigate();
 
   return (
     <Card>
@@ -220,21 +224,21 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
               </TableCell>
               <TableCell>Order Details</TableCell>
               <TableCell>Order ID</TableCell>
-              <TableCell>Source</TableCell>
+              <TableCell>Transaction ID</TableCell>
               <TableCell align="right">Amount</TableCell>
               <TableCell align="right">Status</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedCryptoOrders.map((cryptoOrder) => {
+            {paginatedCryptoOrders.map((order) => {
               const isCryptoOrderSelected = selectedCryptoOrders.includes(
-                cryptoOrder.id
+                order?.iOrderId
               );
               return (
                 <TableRow
                   hover
-                  key={cryptoOrder.id}
+                  key={order?.iOrderId}
                   selected={isCryptoOrderSelected}
                 >
                   <TableCell padding="checkbox">
@@ -242,7 +246,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                       color="primary"
                       checked={isCryptoOrderSelected}
                       onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        handleSelectOneCryptoOrder(event, cryptoOrder.id)
+                        handleSelectOneCryptoOrder(event, order?.iOrderId)
                       }
                       value={isCryptoOrderSelected}
                     />
@@ -255,10 +259,10 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                       gutterBottom
                       noWrap
                     >
-                      {cryptoOrder.orderDetails}
+                      {order?.vBillingFirstName + ' ' + order?.vBillingLastName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
-                      {format(cryptoOrder.orderDate, 'MMMM dd yyyy')}
+                      {new Date(order?.dtAddedDate).toLocaleDateString()}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -269,7 +273,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                       gutterBottom
                       noWrap
                     >
-                      {cryptoOrder.orderID}
+                      {order?.iOrderId}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -280,10 +284,10 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                       gutterBottom
                       noWrap
                     >
-                      {cryptoOrder.sourceName}
+                      {order?.vOrderPaymentTransactionId}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
-                      {cryptoOrder.sourceDesc}
+                      {order?.eOrderStatus}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
@@ -294,21 +298,22 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                       gutterBottom
                       noWrap
                     >
-                      {cryptoOrder.amountCrypto}
-                      {cryptoOrder.cryptoCurrency}
+                      {order?.eOrderTotal}
+                      {/* {order.cryptoCurrency} */}
                     </Typography>
                     <Typography variant="body2" color="text.secondary" noWrap>
-                      {numeral(cryptoOrder.amount).format(
-                        `${cryptoOrder.currency}0,0.00`
-                      )}
+                      {numeral(order?.eOrderSubTotal).format(`$ 0,0.00`)}
                     </Typography>
                   </TableCell>
                   <TableCell align="right">
-                    {getStatusLabel(cryptoOrder.status)}
+                    {getStatusLabel(order?.eOrderStatus)}
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title="Edit Order" arrow>
                       <IconButton
+                        onClick={() => {
+                          router(`/order/${order.iOrderId}`);
+                        }}
                         sx={{
                           '&:hover': {
                             background: theme.colors.primary.lighter
@@ -321,8 +326,11 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                         <EditTwoToneIcon fontSize="small" />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip title="Delete Order" arrow>
+                    <Tooltip title="View Order" arrow>
                       <IconButton
+                        onClick={() => {
+                          router(`/order/${order.iOrderId}`);
+                        }}
                         sx={{
                           '&:hover': { background: theme.colors.error.lighter },
                           color: theme.palette.error.main
@@ -330,7 +338,7 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
                         color="inherit"
                         size="small"
                       >
-                        <DeleteTwoToneIcon fontSize="small" />
+                        <RemoveRedEyeRounded fontSize="small" />
                       </IconButton>
                     </Tooltip>
                   </TableCell>
@@ -356,11 +364,11 @@ const RecentOrdersTable: FC<RecentOrdersTableProps> = ({ cryptoOrders }) => {
 };
 
 RecentOrdersTable.propTypes = {
-  cryptoOrders: PropTypes.array.isRequired
+  orderDetails: PropTypes.array.isRequired
 };
 
 RecentOrdersTable.defaultProps = {
-  cryptoOrders: []
+  orderDetails: []
 };
 
 export default RecentOrdersTable;

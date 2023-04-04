@@ -23,7 +23,13 @@ import Autocomplete from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { Stack } from '@mui/system';
-import { Field, FieldArray, FormikProvider, useFormik } from 'formik';
+import {
+  Field,
+  FieldArray,
+  FormikHelpers,
+  FormikProvider,
+  useFormik
+} from 'formik';
 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -95,17 +101,29 @@ export const CreateCelebrityForm = (props) => {
     initialValues: initialValues,
     validationSchema: createCelebritySchema,
     onSubmit: (data, action) => {
-      handleSubmit(data).then(() => {
-        action.resetForm({
-          values: initialValues
-        });
-      });
+      handleSubmit(data, action);
     },
     enableReinitialize: true,
     validateOnChange: true
   });
 
-  const handleSubmit = async (data: any) => {
+  const handleSubmit = async (
+    data: any,
+    action: FormikHelpers<{
+      first_name: string;
+      last_name: string;
+      email: string;
+      phone: string;
+      title: string;
+      tag_line: string;
+      short_description: string;
+      long_description: string;
+      categories: any[];
+      price: string;
+      is_featured: boolean;
+      social_media_links: {}[];
+    }>
+  ) => {
     setIsLoading(true);
     let catIdArray = [];
     selectedCategories.map((cat) => {
@@ -138,6 +156,9 @@ export const CreateCelebrityForm = (props) => {
         if (response.data.success === 1) {
           setIsLoading(false);
           setSeverity('success');
+          action.resetForm({
+            values: initialValues
+          });
         } else if (response.data.success === 0) {
           setSeverity('warning');
         } else {

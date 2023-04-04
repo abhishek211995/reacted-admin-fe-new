@@ -269,27 +269,8 @@ const ViewOrder = () => {
                       </Typography>
                     </Box>
                   </ListItem>
-                  <Divider />
-                  <ListItem>
-                    <ListItemText
-                      sx={{ pl: '0px', fontWeight: 800, maxWidth: '300px' }}
-                    >
-                      <Box>
-                        <Typography sx={{ fontWeight: 600 }}>Tax</Typography>
-                      </Box>
-                    </ListItemText>
-                    <Box
-                      sx={{
-                        flex: '1 1 0%',
-                        mt: '0px'
-                      }}
-                    >
-                      <Typography sx={{ opacity: 0.75 }}>
-                        $180 ( 18% VAT )
-                      </Typography>
-                    </Box>
-                  </ListItem>
-                  <Divider />
+
+                  {/* <Divider />
                   <ListItem>
                     <ListItemText
                       sx={{ pl: '0px', fontWeight: 800, maxWidth: '300px' }}
@@ -310,7 +291,7 @@ const ViewOrder = () => {
                         PROMO1 ( Discount - $80 )
                       </Typography>
                     </Box>
-                  </ListItem>
+                  </ListItem> */}
                   <Divider />
                   <ListItem>
                     <ListItemText

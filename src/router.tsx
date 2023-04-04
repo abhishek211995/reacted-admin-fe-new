@@ -46,7 +46,7 @@ const SocialMediaIndex = Loader(lazy(() => import('src/pages/socialMedia/SocialM
 
 // Order
 const ViewOrderIndex = Loader(lazy(() => import('src/pages/Orders/ViewOrder')))
-const LatestOrders = Loader(lazy(() => import('src/pages/Orders/OrdersList')))
+const LatestOrders = Loader(lazy(() => import('src/pages/Orders/RecentOrders')))
 const OrdersIndex = Loader(lazy(() => import('src/pages/Orders/OrdersIndex')))
 
 // Customer Support 
