@@ -72,6 +72,7 @@ export const CategoryList = (props: any) => {
                   <TableCell padding="checkbox">
                     <Checkbox color="primary" />
                   </TableCell>
+                  <TableCell>img</TableCell>
                   <TableCell>Category Title</TableCell>
                   <TableCell>Slug</TableCell>
                   <TableCell>Status</TableCell>
