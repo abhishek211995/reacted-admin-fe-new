@@ -37,7 +37,7 @@ export const CategoryComponent = (props) => {
       image: ''
     },
     validationSchema: Yup.object().shape({
-      category_name: Yup.string().required('Category Title is required')
+      category_name: Yup.string().required('Genre Title is required')
     }),
     onSubmit: (data) => {
       handleSubmit(data);
@@ -114,7 +114,7 @@ export const CategoryComponent = (props) => {
   return (
     <form autoComplete="off" noValidate onSubmit={formik.handleSubmit}>
       <Card>
-        <CardHeader subheader="" title="Add Category" />
+        <CardHeader subheader="" title="Add Genre" />
         <Divider />
         <CardContent>
           <Typography sx={{ mb: 3 }} variant="h6">
@@ -124,7 +124,7 @@ export const CategoryComponent = (props) => {
             <Grid item md={12} xs={12}>
               <TextField
                 fullWidth
-                label="Category Title"
+                label="Genre Title"
                 name="category_name"
                 required
                 variant="outlined"
@@ -137,7 +137,7 @@ export const CategoryComponent = (props) => {
             <Grid item md={12} xs={12}>
               <TextField
                 fullWidth
-                label="Category Slug"
+                label="Genre Slug"
                 name="slug"
                 required
                 variant="outlined"
@@ -148,7 +148,7 @@ export const CategoryComponent = (props) => {
 
             <Grid item md={12} xs={12}>
               <Button variant="contained" component="label">
-                Upload Category Icon
+                Upload Genre Icon
                 <input type="file" hidden name="catIcon" />
               </Button>
             </Grid>
@@ -169,7 +169,7 @@ export const CategoryComponent = (props) => {
             type="submit"
             disabled={formik.isSubmitting}
           >
-            Add Category
+            Add Genre
           </Button>
         </Box>
       </Card>

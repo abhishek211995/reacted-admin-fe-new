@@ -288,7 +288,7 @@ function SidebarMenu() {
                   to="/categories"
                   startIcon={<TableChartTwoToneIcon />}
                 >
-                  Categories
+                  Genres
                 </Button>
               </ListItem>
               <ListItem component="div">

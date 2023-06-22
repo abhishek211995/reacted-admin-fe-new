@@ -36,7 +36,7 @@ const CategoriesIndex = () => {
             >
                 <Container maxWidth="lg">
                     <Typography sx={{ mb: 3 }} variant="h4">
-                        Categories
+                        Genres
                     </Typography>
                     <Grid container spacing={2}>
                         <Grid item lg={5} md={5} xs={12}>

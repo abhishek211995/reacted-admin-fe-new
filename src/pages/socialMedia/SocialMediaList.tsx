@@ -82,7 +82,7 @@ export const SoclaiMediaList = (props) => {
                   <TableCell padding="checkbox">
                     <Checkbox color="primary" />
                   </TableCell>
-                  <TableCell>Category Title</TableCell>
+                  <TableCell>Genre Title</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
