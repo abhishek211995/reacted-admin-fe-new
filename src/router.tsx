@@ -124,6 +124,9 @@ const AccountProfile = Loader(lazy(() => import('src/pages/Account/Account')));
 // settings
 const Setting = Loader(lazy(() => import('src/pages/Settings/Setting')));
 
+// add user
+const AddUser = Loader(lazy(() => import('src/pages/Users/AddUser')));
+
 const routes: RouteObject[] = [
   {
     path: '/login',
@@ -144,6 +147,10 @@ const routes: RouteObject[] = [
       {
         path: '/settings',
         element: <Setting />
+      },
+      {
+        path: '/add-user',
+        element: <AddUser />
       },
       {
         path: '/',

@@ -31,6 +31,7 @@ import ChromeReaderModeTwoToneIcon from '@mui/icons-material/ChromeReaderModeTwo
 import WorkspacePremiumTwoToneIcon from '@mui/icons-material/WorkspacePremiumTwoTone';
 import CameraFrontTwoToneIcon from '@mui/icons-material/CameraFrontTwoTone';
 import DisplaySettingsTwoToneIcon from '@mui/icons-material/DisplaySettingsTwoTone';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 const MenuWrapper = styled(Box)(
   ({ theme }) => `
@@ -355,6 +356,17 @@ function SidebarMenu() {
                   startIcon={<DisplaySettingsTwoToneIcon />}
                 >
                   Account Settings
+                </Button>
+              </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/add-user"
+                  startIcon={<PersonAddIcon />}
+                >
+                  Add User
                 </Button>
               </ListItem>
             </List>

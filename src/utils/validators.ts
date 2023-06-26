@@ -29,6 +29,13 @@ export const RegisterSchema = Yup.object().shape({
   name: Yup.string().required(requiredMessage('Name'))
 });
 
+export const AddUserSchema = Yup.object().shape({
+  name: Yup.string().required("Name is Required"),
+  email: emailValidator,
+  role: Yup.string().required("Role is Required"),
+});
+
+
 export const createCelebritySchema = Yup.object().shape({
   first_name: Yup.string()
     .min(3, minErrorMessage(3))
