@@ -188,10 +188,10 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/overview"
+                  to="/"
                   startIcon={<DesignServicesTwoToneIcon />}
                 >
-                  Overview
+                  Dashboard
                 </Button>
               </ListItem>
             </List>
@@ -199,23 +199,30 @@ function SidebarMenu() {
         </List>
         <List
           component="div"
-          subheader={
-            <ListSubheader component="div" disableSticky>
-              Dashboards
-            </ListSubheader>
-          }
+          // subheader={
+          //   <ListSubheader component="div" disableSticky>
+          //     Dashboards
+          //   </ListSubheader>
+          // }
         >
           <SubMenuWrapper>
-            <List component="div">
+            <List
+              component="div"
+              subheader={
+                <ListSubheader component="div" disableSticky>
+                  Music Creator
+                </ListSubheader>
+              }
+            >
               <ListItem component="div">
                 <Button
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/dashboards/crypto"
+                  to="/Add-Music-Creator"
                   startIcon={<BrightnessLowTwoToneIcon />}
                 >
-                  Cryptocurrency
+                  Add Music Creator
                 </Button>
               </ListItem>
               <ListItem component="div">
@@ -223,10 +230,41 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/dashboards/messenger"
+                  to="/view-music-creators"
                   startIcon={<MmsTwoToneIcon />}
                 >
-                  Messenger
+                  View Music Creators
+                </Button>
+              </ListItem>
+            </List>
+            <List
+              component="div"
+              subheader={
+                <ListSubheader component="div" disableSticky>
+                  Celebrity
+                </ListSubheader>
+              }
+            >
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/celebrity/create"
+                  startIcon={<MmsTwoToneIcon />}
+                >
+                  Add Celebrity
+                </Button>
+              </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/celebrities"
+                  startIcon={<MmsTwoToneIcon />}
+                >
+                  View All Celebrities
                 </Button>
               </ListItem>
             </List>
@@ -247,10 +285,41 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/management/transactions"
+                  to="/categories"
                   startIcon={<TableChartTwoToneIcon />}
                 >
-                  Transactions List
+                  Genres
+                </Button>
+              </ListItem>
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/social-media-platforms"
+                  startIcon={<TableChartTwoToneIcon />}
+                >
+                  Social Media Platforms
+                </Button>
+              </ListItem>
+            </List>
+            <List
+              component={'div'}
+              subheader={
+                <ListSubheader component="div" disableSticky>
+                  Orders
+                </ListSubheader>
+              }
+            >
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
+                  to="/orders"
+                  startIcon={<TableChartTwoToneIcon />}
+                >
+                  All Orders
                 </Button>
               </ListItem>
             </List>
@@ -271,10 +340,10 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/management/profile/details"
+                  to="/account"
                   startIcon={<AccountCircleTwoToneIcon />}
                 >
-                  User Profile
+                  My Account
                 </Button>
               </ListItem>
               <ListItem component="div">
@@ -282,7 +351,7 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/management/profile/settings"
+                  to="/settings"
                   startIcon={<DisplaySettingsTwoToneIcon />}
                 >
                   Account Settings
@@ -295,7 +364,7 @@ function SidebarMenu() {
           component="div"
           subheader={
             <ListSubheader component="div" disableSticky>
-              Components
+              Support
             </ListSubheader>
           }
         >
@@ -306,13 +375,13 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/components/buttons"
+                  to="/customer-support"
                   startIcon={<BallotTwoToneIcon />}
                 >
-                  Buttons
+                  Customer Support
                 </Button>
               </ListItem>
-              <ListItem component="div">
+              {/* <ListItem component="div">
                 <Button
                   disableRipple
                   component={RouterLink}
@@ -399,7 +468,7 @@ function SidebarMenu() {
                 >
                   Forms
                 </Button>
-              </ListItem>
+              </ListItem> */}
             </List>
           </SubMenuWrapper>
         </List>
@@ -407,7 +476,7 @@ function SidebarMenu() {
           component="div"
           subheader={
             <ListSubheader component="div" disableSticky>
-              Extra Pages
+              Reports
             </ListSubheader>
           }
         >
@@ -418,21 +487,10 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/status/404"
-                  startIcon={<CheckBoxTwoToneIcon />}
-                >
-                  Error 404
-                </Button>
-              </ListItem>
-              <ListItem component="div">
-                <Button
-                  disableRipple
-                  component={RouterLink}
-                  onClick={closeSidebar}
-                  to="/status/500"
+                  to="/reports/best-performing-genre"
                   startIcon={<CameraFrontTwoToneIcon />}
                 >
-                  Error 500
+                  Best Performing Genre
                 </Button>
               </ListItem>
               <ListItem component="div">
@@ -440,10 +498,10 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/status/coming-soon"
+                  to="/reports/amount-in-escrow"
                   startIcon={<ChromeReaderModeTwoToneIcon />}
                 >
-                  Coming Soon
+                  Amount in Escrow
                 </Button>
               </ListItem>
               <ListItem component="div">

@@ -61,9 +61,7 @@ function Cards() {
 
   return (
     <>
-      <Helmet>
-        <title>Cards - Components</title>
-      </Helmet>
+      <title>Cards - Components</title>
       <PageTitleWrapper>
         <PageTitle
           heading="Cards"
