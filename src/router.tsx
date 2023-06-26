@@ -205,7 +205,7 @@ const routes: RouteObject[] = [
         element: <CustomerSupport />
       },
       {
-        path: '/reports/best-performing-genere',
+        path: '/reports/best-performing-genre',
         element: <BestPerformingGenere />
       },
       {
