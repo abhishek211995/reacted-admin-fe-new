@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardHeader, CardContent, Typography, Grid } from '@mui/material';
 import { Box, Container } from '@mui/system';
+import DateRangePickerComponent from '../../components/DateRangePicker';
 
 const BestPerformingGenere = (props) => {
   return (
@@ -12,6 +13,7 @@ const BestPerformingGenere = (props) => {
       }}
     >
       <Container maxWidth="lg">
+        <DateRangePickerComponent />
         <Card>
           <CardHeader title="Best Performing Genre" />
           <CardContent>

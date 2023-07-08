@@ -30,11 +30,10 @@ export const RegisterSchema = Yup.object().shape({
 });
 
 export const AddUserSchema = Yup.object().shape({
-  name: Yup.string().required("Name is Required"),
+  name: Yup.string().required('Name is Required'),
   email: emailValidator,
-  role: Yup.string().required("Role is Required"),
+  role: Yup.string().required('Role is Required')
 });
-
 
 export const createCelebritySchema = Yup.object().shape({
   first_name: Yup.string()
@@ -130,4 +129,17 @@ export const UpdateMusicCreatorSchema = Yup.object().shape({
   phone: Yup.string().required('Phone is required'),
   artist_name: Yup.string().required('Artist Name is required'),
   description: Yup.string().required('Description is required')
+});
+
+export const SpecialCelebSchema = Yup.object().shape({
+  start_date: Yup.date()
+    .min(new Date(), 'Start date should be today or greater')
+    .required('Start date is required'),
+  end_date: Yup.date()
+    .min(Yup.ref('start_date'), 'End date should be greater than start date')
+    .required('End date is required'),
+  percent_off: Yup.number()
+    .required('Percent Off is required')
+    .min(1, 'Percent off should be greater than 1')
+    .max(100, 'Percent off should be less than 100')
 });

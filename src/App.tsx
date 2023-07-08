@@ -9,6 +9,7 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { CssBaseline } from '@mui/material';
 import ThemeProvider from './theme/ThemeProvider';
 import { AuthProvider } from './contexts/AuthContext';
+import 'rsuite/dist/rsuite.css';
 
 function App() {
   const content = useRoutes(router);
