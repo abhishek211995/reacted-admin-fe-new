@@ -1,7 +1,15 @@
 import React from 'react';
-import { Card, CardHeader, CardContent, Typography, Grid } from '@mui/material';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Typography,
+  Grid,
+  IconButton
+} from '@mui/material';
 import { Box, Container } from '@mui/system';
 import DateRangePickerComponent from '../../components/DateRangePicker';
+import MusicVideoIcon from '@mui/icons-material/MusicVideo';
 
 const BestPerformingGenere = (props) => {
   return (
@@ -20,7 +28,14 @@ const BestPerformingGenere = (props) => {
             <Grid container spacing={3}>
               <Grid item md={4} xs={4}>
                 <Card>
-                  <CardHeader title="HipHop" />
+                  <CardHeader
+                    title="HipHop"
+                    action={
+                      <IconButton aria-label="settings">
+                        <MusicVideoIcon />
+                      </IconButton>
+                    }
+                  />
                   <CardContent>
                     <Typography variant="body1">$10,000 Sales</Typography>
                   </CardContent>

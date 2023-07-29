@@ -10,7 +10,7 @@ export interface User {
   phone: any;
   first_name?: string;
   last_name?: string;
-  user_id?: string
+  user_id?: string;
 }
 
 export type Creator = {
@@ -27,12 +27,16 @@ export type Creator = {
   categories: string;
   images: string;
   music_creator_id: string;
-
 };
 
-interface AuthContextProps { user: any | null, isLoggedIn: boolean, loading: any, signIn: (user: User) => void, signOut: () => void }
+interface AuthContextProps {
+  user: any | null;
+  isLoggedIn: boolean;
+  loading: any;
+  signIn: (user: User) => void;
+  signOut: () => void;
+}
 const AuthContext = createContext<AuthContextProps>(null);
-
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({
@@ -82,6 +86,5 @@ export const AuthProvider = ({ children }) => {
 export const useAuth = () => {
   return React.useContext(AuthContext);
 };
-
 
 export default useAuth;

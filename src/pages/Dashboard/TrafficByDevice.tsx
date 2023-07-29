@@ -1,5 +1,13 @@
 import { Doughnut } from 'react-chartjs-2';
-import { Box, Card, CardContent, CardHeader, Divider, Typography, useTheme } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  Typography,
+  useTheme
+} from '@mui/material';
 import LaptopMacIcon from '@mui/icons-material/LaptopMac';
 import PhoneIcon from '@mui/icons-material/Phone';
 import TabletIcon from '@mui/icons-material/Tablet';
@@ -76,7 +84,7 @@ export const TrafficByDevice = (props) => {
         >
           <Doughnut
             data={data}
-          // options={options}
+            // options={options}
           />
         </Box>
         <Box
@@ -86,12 +94,7 @@ export const TrafficByDevice = (props) => {
             pt: 2
           }}
         >
-          {devices.map(({
-            color,
-            icon: Icon,
-            title,
-            value
-          }) => (
+          {devices.map(({ color, icon: Icon, title, value }) => (
             <Box
               key={title}
               sx={{
@@ -100,18 +103,11 @@ export const TrafficByDevice = (props) => {
               }}
             >
               <Icon color="action" />
-              <Typography
-                color="textPrimary"
-                variant="body1"
-              >
+              <Typography color="textPrimary" variant="body1">
                 {title}
               </Typography>
-              <Typography
-                style={{ color }}
-                variant="h4"
-              >
-                {value}
-                %
+              <Typography style={{ color }} variant="h4">
+                {value}%
               </Typography>
             </Box>
           ))}
