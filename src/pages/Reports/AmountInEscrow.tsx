@@ -1,8 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardHeader, CardContent, Typography, Grid } from '@mui/material';
 import { Box, Container } from '@mui/system';
+import DateRangePickerComponent from 'src/components/DateRangePicker';
+import axios from 'axios';
+import { baseUrl } from 'src/constants/constants';
+import moment from 'moment';
 
-const AmountInEscrow = (props) => {
+let formData = new FormData();
+formData.append('from_date', '2022-07-01');
+formData.append('to_date', '2023-07-24');
+const AmountInEscrow = (props: any) => {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = () => {
+    axios
+      .post(baseUrl + '/status_wise_amount_in_escrow', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `${localStorage
+            .getItem('access_key')
+            ?.replaceAll('"', '')}`
+        }
+      })
+      .then((response) => {
+        setData(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error?.message, 'status_wise_amount_in_escrow api error');
+      });
+  };
+  const dateSelected = (val: any) => {
+    if (val) {
+      formData.set('from_date', moment(val[0]).format('YYYY-MM-DD'));
+      formData.set('to_date', moment(val[1]).format('YYYY-MM-DD'));
+      getData();
+    } else {
+      formData.set('from_date', moment().format('YYYY-MM-DD'));
+      formData.set('to_date', moment().format('YYYY-MM-DD'));
+      getData();
+    }
+  };
   return (
     <Box
       component="main"
@@ -12,6 +51,9 @@ const AmountInEscrow = (props) => {
       }}
     >
       <Container maxWidth="lg">
+        <DateRangePickerComponent
+          dateSelected={(val: any) => dateSelected(val)}
+        />
         <Card>
           <CardHeader title="Amount In Escrow" />
           <CardContent>
@@ -20,7 +62,15 @@ const AmountInEscrow = (props) => {
                 <Card>
                   <CardHeader title="Total Amount" />
                   <CardContent>
-                    <Typography variant="body1">$20,000 Sales</Typography>
+                    <Typography variant="body1">
+                      $
+                      {data?.all_amout
+                        ? data?.all_amout
+                            ?.toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                        : 0}{' '}
+                      Sales
+                    </Typography>
                   </CardContent>
                 </Card>
               </Grid>
@@ -28,7 +78,14 @@ const AmountInEscrow = (props) => {
                 <Card>
                   <CardHeader title="Paid" />
                   <CardContent>
-                    <Typography variant="body1">$8,000</Typography>
+                    <Typography variant="body1">
+                      $
+                      {data?.paid_amout
+                        ? data?.paid_amout
+                            ?.toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                        : 0}
+                    </Typography>
                   </CardContent>
                 </Card>
               </Grid>
@@ -36,7 +93,15 @@ const AmountInEscrow = (props) => {
                 <Card>
                   <CardHeader title="Amount In Escrow" />
                   <CardContent>
-                    <Typography variant="body1">$12,000 in Sales</Typography>
+                    <Typography variant="body1">
+                      $
+                      {data?.amout_in_escrow
+                        ? data?.amout_in_escrow
+                            ?.toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                        : 0}{' '}
+                      in Sales
+                    </Typography>
                   </CardContent>
                 </Card>
               </Grid>
