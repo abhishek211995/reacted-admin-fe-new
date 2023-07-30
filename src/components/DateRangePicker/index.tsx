@@ -7,6 +7,7 @@ import startOfMonth from 'date-fns/startOfMonth';
 import endOfMonth from 'date-fns/endOfMonth';
 import addMonths from 'date-fns/addMonths';
 import { Typography } from '@mui/material';
+import React, { useEffect } from 'react';
 
 const predefinedRanges = [
   {
@@ -140,21 +141,28 @@ const predefinedBottomRanges = [
   }
 ];
 
-const DateRangePickerComponent = () => (
-  <Stack
-    direction="column"
-    spacing={8}
-    alignItems="flex-start"
-    style={{ marginBottom: '20px' }}
-  >
-    <Typography fontWeight={700}>Select Date Range</Typography>
-    <DateRangePicker
-      // @ts-ignore
-      ranges={predefinedRanges}
-      placeholder="Select Date Range"
-      style={{ width: 300 }}
-    />
-  </Stack>
-);
+const DateRangePickerComponent = (props) => {
+  const [value, setValue] = React.useState(null);
+  useEffect(() => {
+    props.dateSelected(value);
+  }, [value]);
+  return (
+    <Stack
+      direction="column"
+      spacing={8}
+      alignItems="flex-start"
+      style={{ marginBottom: '20px' }}
+    >
+      <Typography fontWeight={700}>Select Date Range</Typography>
+      <DateRangePicker
+        // @ts-ignore
+        ranges={predefinedRanges}
+        onChange={setValue}
+        placeholder="Select Date Range"
+        style={{ width: 300 }}
+      />
+    </Stack>
+  );
+};
 
 export default DateRangePickerComponent;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Card,
   CardHeader,
@@ -10,8 +10,46 @@ import {
 import { Box, Container } from '@mui/system';
 import DateRangePickerComponent from '../../components/DateRangePicker';
 import MusicVideoIcon from '@mui/icons-material/MusicVideo';
+import axios from 'axios';
+import { baseUrl } from 'src/constants/constants';
+import moment from 'moment';
 
+let formData = new FormData();
+formData.append('from_date', '');
+formData.append('to_date', '');
 const BestPerformingGenere = (props) => {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = () => {
+    axios
+      .post(baseUrl + '/highest_performing_category', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `${localStorage
+            .getItem('access_key')
+            ?.replaceAll('"', '')}`
+        }
+      })
+      .then((response) => {
+        setData(response.data.data);
+      })
+      .catch((error) => {
+        console.log(error?.message, 'highest_performing_category api error');
+      });
+  };
+  const dateSelected = (val: any) => {
+    if (val) {
+      formData.set('from_date', moment(val[0]).format('YYYY-MM-DD'));
+      formData.set('to_date', moment(val[1]).format('YYYY-MM-DD'));
+      getData();
+    } else {
+      formData.set('from_date', '');
+      formData.set('to_date', '');
+      getData();
+    }
+  };
   return (
     <Box
       component="main"
@@ -21,82 +59,38 @@ const BestPerformingGenere = (props) => {
       }}
     >
       <Container maxWidth="lg">
-        <DateRangePickerComponent />
+        <DateRangePickerComponent
+          dateSelected={(val: any) => dateSelected(val)}
+        />
         <Card>
           <CardHeader title="Best Performing Genre" />
           <CardContent>
             <Grid container spacing={3}>
-              <Grid item md={4} xs={4}>
-                <Card>
-                  <CardHeader
-                    title="HipHop"
-                    action={
-                      <IconButton aria-label="settings">
-                        <MusicVideoIcon />
-                      </IconButton>
-                    }
-                  />
-                  <CardContent>
-                    <Typography variant="body1">$10,000 Sales</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item md={4} xs={4}>
-                <Card>
-                  <CardHeader title="Rock" />
-                  <CardContent>
-                    <Typography variant="body1">$5,000 in Sales</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item md={4} xs={4}>
-                <Card>
-                  <CardHeader title="Indie" />
-                  <CardContent>
-                    <Typography variant="body1">$2,000 in Sales</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item md={4} xs={4}>
-                <Card>
-                  <CardHeader title="Indie" />
-                  <CardContent>
-                    <Typography variant="body1">$2,000 in Sales</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item md={4} xs={4}>
-                <Card>
-                  <CardHeader title="Indie" />
-                  <CardContent>
-                    <Typography variant="body1">$2,000 in Sales</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item md={4} xs={4}>
-                <Card>
-                  <CardHeader title="Indie" />
-                  <CardContent>
-                    <Typography variant="body1">$2,000 in Sales</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item md={4} xs={4}>
-                <Card>
-                  <CardHeader title="Indie" />
-                  <CardContent>
-                    <Typography variant="body1">$2,000 in Sales</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item md={4} xs={4}>
-                <Card>
-                  <CardHeader title="Indie" />
-                  <CardContent>
-                    <Typography variant="body1">$2,000 in Sales</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
+              {data &&
+                data.map((value: any, index: any) => (
+                  <Grid item md={4} xs={4} key={index}>
+                    <Card>
+                      <CardHeader
+                        title={value.category_name}
+                        action={
+                          <IconButton aria-label="settings">
+                            <MusicVideoIcon />
+                          </IconButton>
+                        }
+                      />
+                      <CardContent>
+                        <Typography variant="body1">
+                          $
+                          {value.category_count.replace(
+                            /\B(?=(\d{3})+(?!\d))/g,
+                            ','
+                          )}{' '}
+                          Sales
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
             </Grid>
           </CardContent>
         </Card>
