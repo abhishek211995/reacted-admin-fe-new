@@ -7,8 +7,8 @@ import { baseUrl } from 'src/constants/constants';
 import moment from 'moment';
 
 let formData = new FormData();
-formData.append('from_date', '2022-07-01');
-formData.append('to_date', '2023-07-24');
+formData.append('from_date', moment().format('YYYY-MM-DD'));
+formData.append('to_date', moment().format('YYYY-MM-DD'));
 const AmountInEscrow = (props: any) => {
   const [data, setData] = useState(null);
   useEffect(() => {
