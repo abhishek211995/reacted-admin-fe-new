@@ -17,7 +17,7 @@ import moment from 'moment';
 let formData = new FormData();
 formData.append('from_date', '');
 formData.append('to_date', '');
-const BestPerformingGenere = (props) => {
+const BestPerformingGenere = (props: any) => {
   const [data, setData] = useState(null);
   useEffect(() => {
     getData();
